@@ -13,6 +13,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import "./App.css";
 
+// 🔥 PAKSA GLOBAL - OVERRIDE SEMUA!
+window.__API_URL = "https://socialscheduler-backend.up.railway.app/api";
+console.log("🔥 FORCED API URL:", window.__API_URL);
+
 function App() {
   return (
     <UserProvider>

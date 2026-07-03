@@ -7,4 +7,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  // 🔥 PAKSA ENVIRONMENT VARIABLE!
+  define: {
+    'import.meta.env.VITE_API_URL': JSON.stringify('https://socialscheduler-backend.up.railway.app/api')
+  }
 });

@@ -1,8 +1,10 @@
 // frontend/src/api/axios.js
 import axios from "axios";
 
-// 🔥 HARDCODE SEMENTARA - PASTI JALAN!
-const API_URL = "https://socialscheduler-backend.up.railway.app/api";
+// 🔥 PAKSA PAKAI DARI define
+const API_URL = import.meta.env.VITE_API_URL || "https://socialscheduler-backend.up.railway.app/api";
+
+console.log("🔥 API_URL from env:", API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
