@@ -1,16 +1,16 @@
 // frontend/src/api/axios.js
 import axios from "axios";
 
-// Gunakan environment variable
-const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
+// 🔥 HARDCODE SEMENTARA - PASTI JALAN!
+const API_URL = "https://socialscheduler-backend.up.railway.app/api";
 
 const api = axios.create({
-  baseURL: API_URL,  // ← PAKAI ENV VARIABLE!
+  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
   },
-  withCredentials: true, // ← Tambahkan ini untuk Sanctum
+  withCredentials: true,
 });
 
 // ============================================
@@ -45,7 +45,6 @@ api.interceptors.response.use(
   (error) => {
     console.log("❌ [Response Error]", error.response?.status, error.response?.data);
     
-    // 🔥 HANDLE 401
     if (error.response?.status === 401) {
       const path = window.location.pathname;
       const isAuthPage = path.includes('/login') || path.includes('/register');
