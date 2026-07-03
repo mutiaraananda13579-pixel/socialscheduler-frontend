@@ -1,7 +1,7 @@
 // frontend/src/pages/Login.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios";
+import axios from "axios";  // 🔥 TAMBAHKAN INI!
 import {
   EnvelopeIcon,
   LockClosedIcon,
@@ -41,7 +41,16 @@ export default function Login() {
 
     try {
       setLoading(true);
-      const res = await api.post("/login", form);
+      
+      // 🔥 PAKSA URL LANGSUNG!
+      const LOGIN_URL = "https://socialscheduler-backend.up.railway.app/api/login";
+      console.log("🔥 LOGIN_URL:", LOGIN_URL);
+      
+      // 🔥 PAKAI AXIOS LANGSUNG, BUKAN API INSTANCE!
+      const res = await axios.post(LOGIN_URL, {
+        email: form.email,
+        password: form.password
+      });
 
       console.log("✅ LOGIN BERHASIL:");
       console.log("📦 Response:", res.data);
