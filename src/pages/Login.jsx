@@ -1,7 +1,7 @@
 // frontend/src/pages/Login.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";  // 🔥 TAMBAHKAN INI!
+import axios from "axios";
 import {
   EnvelopeIcon,
   LockClosedIcon,
@@ -41,26 +41,25 @@ export default function Login() {
 
     try {
       setLoading(true);
-      
-      // 🔥 PAKSA URL LANGSUNG!
-      const LOGIN_URL = "https://socialscheduler-backend.up.railway.app/api/login";
-      console.log("🔥 LOGIN_URL:", LOGIN_URL);
-      
-      // 🔥 PAKAI AXIOS LANGSUNG, BUKAN API INSTANCE!
+
+      // 🔥 PAKSA URL DARI WINDOW!
+      const LOGIN_URL = window.__API_URL + "/login";
+      console.log("🔥🔥🔥 LOGIN_URL:", LOGIN_URL);
+
       const res = await axios.post(LOGIN_URL, {
         email: form.email,
-        password: form.password
+        password: form.password,
       });
 
       console.log("✅ LOGIN BERHASIL:");
       console.log("📦 Response:", res.data);
 
       const { token, user } = res.data;
-      
+
       if (token) {
         localStorage.setItem("token", token);
       }
-      
+
       if (user) {
         localStorage.setItem("user", JSON.stringify(user));
       }
@@ -68,19 +67,19 @@ export default function Login() {
       sessionStorage.removeItem("dashboardStats");
 
       setSuccess(true);
-      
+
       setTimeout(() => {
         navigate("/dashboard", { replace: true });
       }, 1000);
-
     } catch (err) {
       console.log("❌ LOGIN ERROR:");
       console.log("  - Response:", err.response?.data);
       console.log("  - Status:", err.response?.status);
-      
-      const errorMessage = err.response?.data?.message || 
-                          err.response?.data?.errors?.email?.[0] || 
-                          "Email atau password salah";
+
+      const errorMessage =
+        err.response?.data?.message ||
+        err.response?.data?.errors?.email?.[0] ||
+        "Email atau password salah";
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -89,13 +88,12 @@ export default function Login() {
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
-      
       {/* Background Animated Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-3xl animate-pulse-slow"></div>
         <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-3xl animate-pulse-slow animation-delay-2000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-3xl animate-pulse-slow animation-delay-4000"></div>
-        
+
         {/* Floating Particles */}
         <div className="absolute top-10 left-10 w-2 h-2 bg-blue-400/50 rounded-full animate-float"></div>
         <div className="absolute top-20 right-20 w-3 h-3 bg-purple-400/50 rounded-full animate-float animation-delay-1000"></div>
@@ -103,7 +101,7 @@ export default function Login() {
         <div className="absolute bottom-10 right-10 w-3 h-3 bg-blue-300/50 rounded-full animate-float animation-delay-3000"></div>
         <div className="absolute top-1/2 left-10 w-2 h-2 bg-purple-300/50 rounded-full animate-float animation-delay-1500"></div>
         <div className="absolute top-1/3 right-10 w-3 h-3 bg-indigo-300/50 rounded-full animate-float animation-delay-2500"></div>
-        
+
         {/* Gradient Lines */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent"></div>
@@ -114,9 +112,8 @@ export default function Login() {
       {/* Login Card */}
       <div className="relative w-full max-w-md z-10">
         <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl blur-2xl opacity-20 animate-pulse-slow"></div>
-        
+
         <div className="relative bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl shadow-blue-500/10">
-          
           {/* Sparkle Decoration */}
           <div className="absolute -top-3 -right-3">
             <SparklesIcon className="w-8 h-8 text-blue-400/70 animate-pulse-slow" />
@@ -233,7 +230,10 @@ export default function Login() {
                 id="remember"
                 className="w-4 h-4 bg-slate-900/50 border-slate-700 rounded focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all"
               />
-              <label htmlFor="remember" className="ml-2 text-sm text-slate-400 hover:text-slate-300 transition-colors cursor-pointer">
+              <label
+                htmlFor="remember"
+                className="ml-2 text-sm text-slate-400 hover:text-slate-300 transition-colors cursor-pointer"
+              >
                 Ingat saya
               </label>
             </div>
@@ -247,10 +247,7 @@ export default function Login() {
               <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
               {loading ? (
                 <>
-                  <svg
-                    className="animate-spin h-5 w-5"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                     <circle
                       className="opacity-25"
                       cx="12"
